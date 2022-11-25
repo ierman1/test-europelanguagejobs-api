@@ -22,4 +22,4 @@ Route::post('/dogs/{dog}', 'DogController@update');
 Route::delete('/dogs/{dog}', 'DogController@destroy');
 
 Route::get('/breeds', 'BreedController@index');
-Route::get('/breed/{breed}', 'BreedController@index'); // I dont know if i will need it
+Route::get('/breed/{breed}', 'BreedController@show'); // I dont know if i will need it

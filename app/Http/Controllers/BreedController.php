@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Breed;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 
 class BreedController extends Controller
 {
