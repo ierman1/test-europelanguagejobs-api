@@ -16,7 +16,7 @@ class DogController extends Controller
      */
     public function index()
     {
-        $dogs = Dog::all();
+        $dogs = Dog::with('breed')->get();
 
         return response()->json($dogs->toArray());
     }
@@ -35,11 +35,16 @@ class DogController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Dog $dog
+     * @param $id
      * @return JsonResponse
      */
-    public function show(Dog $dog)
+    public function show($id)
     {
+        $dog = Dog::with('breed')->find($id);
+
+        if (!$dog) // Custom not found exception message
+            abort(404, 'Dog not found.');
+
         return response()->json($dog->toArray());
     }
 
