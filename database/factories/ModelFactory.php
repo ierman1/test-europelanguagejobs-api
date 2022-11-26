@@ -26,6 +26,7 @@ $factory->define(App\Models\Dog::class, function (Faker\Generator $faker) {
         'breed_id' => $faker->numberBetween(1, 5),
         'name' => $faker->name,
         'hair_color' => $faker->colorName,
-        'size' => array('small', 'medium', 'large')[$faker->numberBetween(0, 2)]
+        'size' => array('small', 'medium', 'large')[$faker->numberBetween(0, 2)],
+        'file_path' => '/storage/pictures/default.jpg'
     ];
 });

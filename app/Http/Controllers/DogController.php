@@ -7,6 +7,7 @@ use App\Models\Dog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 class DogController extends Controller
 {
@@ -28,13 +29,30 @@ class DogController extends Controller
      * @param CreateDogRequest $request
      * @return JsonResponse
      */
-    public function store(CreateDogRequest $request)
+    public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'hair_color' => 'required',
+            'size' => 'required|in:small,medium,large',
+            'breed_id' => 'required|exists:breeds,id',
+            'file' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $file = $request->file('file');
+        $name = uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/pictures', $name);
+
         Dog::create([
             'breed_id' => $request->breed_id,
             'name' => $request->name,
             'hair_color' => $request->hair_color,
-            'size' => $request->size
+            'size' => $request->size,
+            'file_path' => '/storage/pictures/' . $name
         ]);
 
         return response()->json(['message' => 'Dog created successfully.']);
