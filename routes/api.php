@@ -13,13 +13,11 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::get('/dogs', '')->middleware('auth:api');
-
 Route::get('/dogs', 'DogController@index');
 Route::get('/dogs/{dog}', 'DogController@show');
 Route::post('/dogs', 'DogController@store');
-Route::post('/dogs/{dog}', 'DogController@update');
-Route::delete('/dogs/{dog}', 'DogController@destroy');
+//Route::post('/dogs/{dog}', 'DogController@update');
+//Route::delete('/dogs/{dog}', 'DogController@destroy');
 
 Route::get('/breeds', 'BreedController@index');
-Route::get('/breeds/{breed}', 'BreedController@show'); // I dont know if i will need it
+//Route::get('/breeds/{breed}', 'BreedController@show');
