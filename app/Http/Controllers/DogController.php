@@ -18,7 +18,7 @@ class DogController extends Controller
      */
     public function index()
     {
-        $dogs = Dog::with('breed')->get();
+        $dogs = Dog::get(['id', 'name', 'file_path']);
 
         return response()->json($dogs->toArray());
     }
@@ -36,23 +36,26 @@ class DogController extends Controller
             'hair_color' => 'required',
             'size' => 'required|in:small,medium,large',
             'breed_id' => 'required|exists:breeds,id',
-            'file' => 'required'
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json($validator->errors(), 200);
         }
 
-        $file = $request->file('file');
-        $name = uniqid() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/pictures', $name);
+        $fileName = 'default.jpg';
+
+        if ($request->file('file') != null) {
+            $file = $request->file('file');
+            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/pictures', $fileName);
+        }
 
         Dog::create([
             'breed_id' => $request->breed_id,
             'name' => $request->name,
             'hair_color' => $request->hair_color,
             'size' => $request->size,
-            'file_path' => '/storage/pictures/' . $name
+            'file_path' => '/storage/pictures/' . $fileName
         ]);
 
         return response()->json(['message' => 'Dog created successfully.']);
