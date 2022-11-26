@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
 
 Route::get('/dogs', 'DogController@index');
 Route::get('/dogs/{dog}', 'DogController@show');
-Route::put('/dogs', 'DogController@store');
+Route::post('/dogs', 'DogController@store');
 Route::post('/dogs/{dog}', 'DogController@update');
 Route::delete('/dogs/{dog}', 'DogController@destroy');
 

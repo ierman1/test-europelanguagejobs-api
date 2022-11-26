@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateDogRequest;
 use App\Models\Dog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,12 +25,19 @@ class DogController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
-     * @return Response
+     * @param CreateDogRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(CreateDogRequest $request)
     {
-        //
+        Dog::create([
+            'breed_id' => $request->breed_id,
+            'name' => $request->name,
+            'hair_color' => $request->hair_color,
+            'size' => $request->size
+        ]);
+
+        return response()->json(['message' => 'Dog created successfully.']);
     }
 
     /**
